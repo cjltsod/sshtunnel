@@ -416,6 +416,11 @@ class _ThreadingForwardServer(socketserver.ThreadingMixIn, _ForwardServer):
     """
     # If True, cleanly stop threads created by ThreadingMixIn when quitting
     daemon_threads = DAEMON
+    
+    def __init__(self, *args, **kwargs):
+        super(_ThreadingForwardServer, self).__init__(*args, **kwargs)  
+        if hasattr(self, 'block_on_close'):
+            self.block_on_close = False
 
 
 class _UnixStreamForwardServer(UnixStreamServer):
