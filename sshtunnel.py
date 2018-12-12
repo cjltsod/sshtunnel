@@ -915,6 +915,11 @@ class SSHTunnelForwarder(object):
 
         self.logger.debug('Concurrent connections allowed: {0}'
                           .format(self._threaded))
+        
+        # Set daemon_forward_servers to True if python version > 3.7
+        if sys.version_info[0] > 3 or \
+                (sys.version_info[0] == 3 and sys.version_info[1] >= 7):
+            self.daemon_forward_servers = True
 
     @staticmethod
     def _read_ssh_config(ssh_host,
